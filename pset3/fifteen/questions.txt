@@ -1,0 +1,10 @@
+questions.txt
+
+Computer Science 50
+Problem Set 3
+
+0. The dimensions allowed are stated by DIM_MIN and DIM_MAX.  In other words, 
+each side can be the minimum of 3 and a maximum of 9.
+1. The data is organized in an array.  
+2. The "greet" function is used to greet the player.
+3. We need to implement init(), draw(), move(), and won()
