@@ -1,0 +1,60 @@
+0.  How many different colors does each format support?
+JPEG and BMP supports 16 million colors.  GIF supports 256 colors.  PNG supports 256 thousand colors.   
+
+1.  Which of the formats supports animation?
+GIF
+
+2.  What's the difference between lossy and lossless compression?
+In lossless compression, every bit of data remains after uncompression.  In lossy compression, the file is reduced by deleting redundant data.  
+
+3.  Which of these formats is lossy-compressed?
+JPEG
+
+4.  What happens, when technically speaking, when a file is deleted on a FAT file system?
+The file data isn't deleted.  What happens is that the OS just marks it as deleted and just recycles the directory entry.
+
+5.  What can you do to ensure (with high probability) that files you delete cannot be recovered?
+You can overwrite the data, degauss the drive, or physically destroy the drive
+
+6.  What is stdint.h?
+It is a header that allows integer types to have specific widths.
+
+7.  What's the point of using uint8_t, unit32_t, int32_t, and unit16_t in a program?
+These specify how many bits you want that int to have.  
+
+8.  How many bytes is a BYTE, a DWORD, a LONG, and a WORD, repectively?
+BYTE: 1 byte
+DWORD: 4 bytes
+LONG: 4 bytes
+WORD: 2 bytes
+
+9.  What (in ASCII, decimal, or hexadecimal) must the first two bytes of any BMP file be? (Leading bytes used to identify file formats (with high probability) are generally called "magic numbers.)"
+The first 2 characters in ASCII is "BM"
+
+10. What's the difference betwwen bfSize and biSize?
+bfSize is the size of the bitmap file.  biSize is the size of the image file.
+
+11. What does it mean if biHeight is negative?
+The bitmap is a top-down DIB (device-independent bitmap) with the origin in the upper-left corner.  
+
+12. What field in BITMAPINFOHEADER specifies the BMP's color depth (i.e., bits per pixel)?
+biBitCount
+
+13. Why might fopen return NULL in copy.c:37?
+It can't find the file to write to.
+
+14. Why is the third argument to fread always 1 in our code?
+The third argument represents the amount of elements to be read.  It's always 1 in this code because we are only reading one struct.
+
+15. What value does copy.c:70 assign padding if bi.biWidth is 3?
+padding =  (4 - (bi.biWidth * sizeof(RGBTRIPLE)) % 4) % 4;
+padding = (4 - (3 * 3)) %4 ) % 4
+padding = 3
+
+16. What does fseek do?
+It sets the file position indicator for the stream pointed to by FILE *stream.
+
+17. What is SEEK_CUR?
+It's the whence argument which specifys that the offset is relative to the current position of the file.
+
+18. Whodunit?
