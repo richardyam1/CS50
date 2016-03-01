@@ -58,3 +58,4 @@ It sets the file position indicator for the stream pointed to by FILE *stream.
 It's the whence argument which specifys that the offset is relative to the current position of the file.
 
 18. Whodunit?
+Rick Astley
