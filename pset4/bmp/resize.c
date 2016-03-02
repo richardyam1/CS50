@@ -15,15 +15,22 @@
 int main(int argc, char* argv[])
 {
     // ensure proper usage
-    if (argc != 3)
+    if (argc != 4)
     {
-        printf("Usage: ./copy infile outfile\n");
+        printf("Usage: ./resize (number) infile outfile\n");
         return 1;
     }
 
     // remember filenames
-    char* infile = argv[1];
-    char* outfile = argv[2];
+    int size = atoi(argv[1]);
+    char* infile = argv[2];
+    char* outfile = argv[3];
+    
+    if (size < 1)
+    {
+        printf("Please input a positive number.\n");
+        return 1;
+    }
 
     // open input file 
     FILE* inptr = fopen(infile, "r");
