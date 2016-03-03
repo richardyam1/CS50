@@ -66,6 +66,13 @@ int main(int argc, char* argv[])
         fprintf(stderr, "Unsupported file format.\n");
         return 4;
     }
+    
+    int oldWidth = biWidth;
+    int oldHeight = biHeight;
+    int newWidth = oldWidth * size;
+    int newHeight = oldHeight * size;
+    biWidth = newWidth;
+    biHeight = newHeight; 
 
     // write outfile's BITMAPFILEHEADER
     fwrite(&bf, sizeof(BITMAPFILEHEADER), 1, outptr);
