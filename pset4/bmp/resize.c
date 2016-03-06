@@ -26,9 +26,9 @@ int main(int argc, char* argv[])
     char* infile = argv[2];
     char* outfile = argv[3];
     
-    if (size < 1)
+    if (size < 1 || size >= 100)
     {
-        printf("Please input a positive number.\n");
+        printf("Please input a number equal or less than 100.\n");
         return 1;
     }
 
@@ -69,12 +69,13 @@ int main(int argc, char* argv[])
     
     //Stores old dimensions and puts in new ones.
     
-    int old_Width = bi.biWidth;
-    int old_Height = bi.biHeight;
-    int new_Width = old_Width * size;
-    int new_Height = old_Height * size;
-    bi.biWidth = new_Width;
-    bi.biHeight = new_Height;
+    int old_width = bi.biWidth;
+    int old_height = bi.biHeight;
+    int new_width = old_width * size;
+    int new_height = old_height * size;
+    /*
+    bi.biWidth = new_width;
+    bi.biHeight = new_height;*/
 
     // write outfile's BITMAPFILEHEADER
     fwrite(&bf, sizeof(BITMAPFILEHEADER), 1, outptr);
@@ -83,8 +84,13 @@ int main(int argc, char* argv[])
     fwrite(&bi, sizeof(BITMAPINFOHEADER), 1, outptr);
 
     // determine padding for scanlines
-    int padding =  (4 - (old_Width * sizeof(RGBTRIPLE)) % 4) % 4;
-    int new_padding = (4 -(bi.biWidth * sizeof(RGBTRIPLE)) %4 ) %4; 
+    int padding =  (4 - (old_width * sizeof(RGBTRIPLE)) % 4) % 4;
+    int new_padding = (4 -(new_width * sizeof(RGBTRIPLE)) %4 ) %4; 
+    
+    
+    /*int old_sizeimage = bi.biSizeImage;
+    int new_sizeimage = (new_width * new_height * sizeof(RGBTRIPLE));
+    bi.biSizeImage = new_sizeimage;*/
 
     // iterate over infile's scanlines
     for (int i = 0, biHeight = abs(bi.biHeight); i < biHeight; i++)
