@@ -26,7 +26,7 @@ int main(int argc, char* argv[])
     char* infile = argv[2];
     char* outfile = argv[3];
     
-    if (size < 1 || size >= 100)
+    if (size < 1 || size > 100)
     {
         printf("Please input a number equal or less than 100.\n");
         return 1;
@@ -67,15 +67,17 @@ int main(int argc, char* argv[])
         return 4;
     }
     
-    //Stores old dimensions and puts in new ones.
+    //Stores old dimensions declare new ones.
     
     int old_width = bi.biWidth;
     int old_height = bi.biHeight;
     int new_width = old_width * size;
     int new_height = old_height * size;
+    
     /*
     bi.biWidth = new_width;
-    bi.biHeight = new_height;*/
+    bi.biHeight = new_height;
+    */
 
     // write outfile's BITMAPFILEHEADER
     fwrite(&bf, sizeof(BITMAPFILEHEADER), 1, outptr);
@@ -93,10 +95,10 @@ int main(int argc, char* argv[])
     bi.biSizeImage = new_sizeimage;*/
 
     // iterate over infile's scanlines
-    for (int i = 0, biHeight = abs(bi.biHeight); i < biHeight; i++)
+    for (int i = 0, biHeight = abs(old_width); i < biHeight; i++)
     {
         // iterate over pixels in scanline
-        for (int j = 0; j < bi.biWidth; j++)
+        for (int j = 0; j < old_width; j++)
         {
             // temporary storage
             RGBTRIPLE triple;
@@ -123,7 +125,8 @@ int main(int argc, char* argv[])
 
     // close outfile
     fclose(outptr);
-
+    
+    
     // that's all folks
     return 0;
 }
