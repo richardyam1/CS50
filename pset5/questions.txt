@@ -11,10 +11,14 @@ A: 16
 A: The getrusage() function returned resource usages in the structure that usage points to.  
 
 4.  Explain as precisely as possible, in a paragraph or more, how 'main' goes about reading words from a file. In other words, convince us that you indeed understand how that function's 'for' loop works.  
+A:  First it reads the character of the word using fgetc().  As long as it has not reached beyond the end of the word, it would then check to see if the character if alphabatical or if the address has '\' in it.  
+Once it passes both checks, the character is placed at the end of the word array and increase the index by 1.  It could keep doing this until it reaches a non-alphabetical character or '\n'.  It is then spell-checked.      
 
 5.  Why do you think we used 'fgetc' to read each word's characters one at a time rather than use 'fscanf' with a format string like "%s" to read whole words at a time?  Put another way, what problems might arise by relying on 'fscanf' alone?
+A: 'fgetc' would scan each character until it reaches the end of the line while 'fscanf' would stop one it reaches whitespace.
 
 6.  Why do you think we declared the parameters for 'check' and 'load' as 'const'? 
+A: This would insure that the word being checked cannot be changed.  
 
 7.  TODO
 8.  TODO
