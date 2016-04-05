@@ -84,38 +84,49 @@ int main(int argc, char* argv[])
     int padding =  (4 - (old_width * sizeof(RGBTRIPLE)) % 4) % 4;
     int new_padding = (4 -(bi.biWidth * sizeof(RGBTRIPLE)) %4 ) %4; 
     
-    //Update image size
+    /*
     int old_sizeimage = bi.biSizeImage;
-    int old_bfsize = bf.bfSize;
+    int old_bfsize = bf.bfSize; */
     
     //Size of header is 54 bytes.
-    bf.bfSize = 54 + (bi.biWidth * sizeof(RGBTRIPLE) + new_padding) * abs(bi.biHeight);
-    bi.biSizeImage = (bi.biWidth * sizeof(RGBTRIPLE) + padding)) * abs(bi.biHeight);
+    bi.biSizeImage = (bi.biWidth * sizeof(RGBTRIPLE) + padding) * abs(bi.biHeight);
+    bf.bfSize = 54 + bi.biSizeImage;
 
     // iterate over infile's scanlines
-    for (int i = 0, biHeight = abs(old_width); i < biHeight; i++)
+    for (int i = 0, biHeight = abs(old_height); i < biHeight; i++)
     {
+        
+        
+        
         // iterate over pixels in scanline
-        for (int j = 0; j < old_width; j++)
-        {
-            // temporary storage
-            RGBTRIPLE triple;
+            for (int j = 0; j < old_width; j++)
+            {
+                // temporary storage
+                RGBTRIPLE triple;
 
-            // read RGB triple from infile
-            fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
+                // read RGB triple from infile
+                fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
+                
+                //Multiplier Iteration
+                for (int h = 0; h < size; h++)
+                {
+                    // write RGB triple to outfile
+                    fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
+                }
+            }
 
-            // write RGB triple to outfile
-            fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
-        }
+            // skip over padding, if any
+            fseek(inptr, padding, SEEK_CUR);
 
-        // skip over padding, if any
-        fseek(inptr, padding, SEEK_CUR);
-
-        // then add it back (to demonstrate how)
-        for (int k = 0; k < new_padding; k++)
-        {
-            fputc(0x00, outptr);
-        }
+            // then add it back (to demonstrate how)
+            for (int k = 0; k < new_padding; k++)
+            {
+                fputc(0x00, outptr);
+            }
+            
+            //Goes to beginning of scanline
+            fseek(inptr, 54 + i * bi.biWidth, SEEK_SET);
+        
     }
 
     // close infile
