@@ -82,22 +82,19 @@ int main(int argc, char* argv[])
 
     // determine padding for scanlines
     int padding =  (4 - (old_width * sizeof(RGBTRIPLE)) % 4) % 4;
+    // Calculate new padding (My code)
     int new_padding = (4 -(bi.biWidth * sizeof(RGBTRIPLE)) %4 ) %4; 
     
-    /*
-    int old_sizeimage = bi.biSizeImage;
-    int old_bfsize = bf.bfSize; */
-    
-    //Size of header is 54 bytes.
+    //Size of header is 54 bytes (My code).
     bi.biSizeImage = (bi.biWidth * sizeof(RGBTRIPLE) + padding) * abs(bi.biHeight);
     bf.bfSize = 54 + bi.biSizeImage;
 
     // iterate over infile's scanlines
     for (int i = 0, biHeight = abs(old_height); i < biHeight; i++)
     {
-        
-        
-        
+        //Copies the lines vertically (My code)
+        for (int g = 0; g < size; g++)
+        {
         // iterate over pixels in scanline
             for (int j = 0; j < old_width; j++)
             {
@@ -107,7 +104,7 @@ int main(int argc, char* argv[])
                 // read RGB triple from infile
                 fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
                 
-                //Multiplier Iteration
+                //Copies the line horizontally (My code) (My code)
                 for (int h = 0; h < size; h++)
                 {
                     // write RGB triple to outfile
@@ -124,9 +121,11 @@ int main(int argc, char* argv[])
                 fputc(0x00, outptr);
             }
             
-            //Goes to beginning of scanline
-            fseek(inptr, 54 + i * bi.biWidth, SEEK_SET);
-        
+            //Moves the pointer to the start of the infile line. (My code) (My code)
+            fseek(inptr, -(old_width * sizeof(RGBTRIPLE) + padding), SEEK_CUR);
+        }
+        //Moves the pointer to the next infile line.  (My code)
+        fseek(inptr, old_width * sizeof(RGBTRIPLE) + padding, SEEK_CUR);
     }
 
     // close infile
