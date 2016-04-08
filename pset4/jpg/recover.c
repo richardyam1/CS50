@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 /**
  * recover.c
  *
@@ -21,6 +22,12 @@ repeat until end of card
 close file
 */
 
+
+/*
+JPG starts with:
+0xff 0xd8 0xff 0xe0 
+0xff 0xd8 0xff 0xe1
+*/
 int main(int argc, char* argv[])
 {
     // TODO
@@ -32,5 +39,13 @@ int main(int argc, char* argv[])
     {
         printf("Could not open file \n");
         return 1;
+    }
+    
+    unsigned char buffer[512]; 
+    fread(&buffer, 512, 1, file);
+    
+    if (buffer[0] == 0xff && buffer[1] == 0xd8 && buffer[2] == 0xff && buffer[3] == 0xe0 || 0xe1)
+    {
+        
     }
 }
