@@ -44,8 +44,26 @@ int main(int argc, char* argv[])
     unsigned char buffer[512]; 
     fread(&buffer, 512, 1, file);
     
-    if (buffer[0] == 0xff && buffer[1] == 0xd8 && buffer[2] == 0xff && buffer[3] == 0xe0 || 0xe1)
+    //Keeps track of amount of jpgs found
+    int jpgcounter = 0; 
+    
+    //Implements loop as long as it's not the eof
+    do
     {
+        if (buffer[0] == 0xff && buffer[1] == 0xd8 && buffer[2] == 0xff && (buffer[3] == 0xe0 || buffer[3] == 0xe1))
+        {
+            char title[8];
+            
+            //makes new jpg
+            sprintf(title, "%d.jpg", jpgcounter);
+            FILE* img = fopen(title, "w");
+            jpgcounter++;
+            
+            fwrite(&buffer, sizeof(buffer), 1, img);
+        }
         
-    }
+    } while(!feof(file));
+        
+    fclose(file);
+    return 1;
 }
