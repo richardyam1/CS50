@@ -1,4 +1,4 @@
-/**
+cd/**
  * dictionary.c
  *
  * Computer Science 50
@@ -9,7 +9,27 @@
 
 #include <stdbool.h>
 
+#include <stdio.h>
+#include <stdlib.h>
+
 #include "dictionary.h"
+
+
+//Create linked list
+typedef struct node
+{
+    char word[LENGTH +1];
+    struct node* next;
+}
+node;
+
+//Creates hash table
+node* hashtable[50000];
+
+/*
+node* node1 = malloc(sizeof(node));
+node* node2 = malloc(sizeof(node));
+*/
 
 /**
  * Returns true if word is in dictionary else false.
@@ -26,7 +46,15 @@ bool check(const char* word)
 bool load(const char* dictionary)
 {
     // TODO
-    return false;
+    FILE* file = fopen(dictionary, "r");
+    if (file = NULL);
+    {
+        return false;
+    }
+    
+    node* new_node = malloc(sizeof(node));
+    fscanf(fp, "%s", new_node->word);
+   
 }
 
 /**
